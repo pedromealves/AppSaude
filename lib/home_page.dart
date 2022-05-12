@@ -11,7 +11,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      theme: ThemeData(
+        primarySwatch: Colors.lightGreen,
+        primaryColor: Colors.green[100],
+        textTheme: TextTheme(
+          bodyText1: TextStyle(fontSize: 30.0, fontFamily: 'Hind'),
+          bodyText2: TextStyle(fontSize: 20.0, fontFamily: 'Hind'),
+          //headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          //headline1: TextStyle(fontSize: 90.0, fontWeight: FontWeight.bold),
+        ),
+      ),
       title: "Saúde",
       //home: HomePage(),
       //routes: {'/editprofile': (_) => EditProfile()},
@@ -44,12 +53,16 @@ class HomePageState extends State<HomePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        // Text("Olá,",
+                        //     style:
+                        //         TextStyle(fontSize: 25, color: Colors.black45)),
                         Text("Olá,",
-                            style:
-                                TextStyle(fontSize: 25, color: Colors.black45)),
+                            style: Theme.of(context).textTheme.bodyText1),
+                        // Text("José",
+                        //     style: TextStyle(
+                        //         fontSize: 25, fontWeight: FontWeight.bold)),
                         Text("José",
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold))
+                            style: Theme.of(context).textTheme.bodyText1)
                       ],
                     ),
                     GestureDetector(

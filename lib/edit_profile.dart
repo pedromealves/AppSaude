@@ -18,7 +18,7 @@ class EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     final ImagePicker _picker = ImagePicker();
     return Scaffold(
-        //backgroundColor:,
+        backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -43,8 +43,7 @@ class EditProfileState extends State<EditProfile> {
                   Center(
                     child: Text(
                       "Editar Perfil",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   SizedBox(
