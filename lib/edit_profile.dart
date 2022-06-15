@@ -1,22 +1,41 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto/model/model.dart';
+import '/db/interface_database.dart';
+
+import 'package:mobx/mobx.dart';
+import '/stores/photoview_store.dart';
+// part 'photoview_store.g.dart.old';
+
+//Uint8List? userImage;
+
+final _photoview = Photoview();
 
 class EditProfile extends StatefulWidget {
+  const EditProfile({Key, key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => EditProfileState();
 }
 
 class EditProfileState extends State<EditProfile> {
-  final ImagePicker _picker = ImagePicker();
-  XFile? image;
+  //final ImagePicker _picker = ImagePicker();
+  //XFile? image;
+  //XFile? imageBeweenScreens;
+
+  //final _photoView = PhotoviewStore();
 
   @override
   Widget build(BuildContext context) {
-    final ImagePicker _picker = ImagePicker();
+    //final ImagePicker _picker = ImagePicker();
+
+    //final _photoview = Photoview();
+
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
@@ -50,61 +69,35 @@ class EditProfileState extends State<EditProfile> {
                     height: 20,
                   ),
                   Center(
-                    child: Stack(
-                      children: [
+                    child: Observer(builder: (BuildContext context) {
+                      return Stack(children: [
                         Container(
                           width: 130,
                           height: 130,
-                          child: CircleAvatar(
-                            radius: 71,
-                            backgroundColor: Colors.lightGreen,
-                            backgroundImage: image == null
-                                ? AssetImage("assets/avatar.png")
-                                : FileImage(File(image!.path)) as ImageProvider,
-                            // child: ClipRRect(
-                            //   borderRadius: BorderRadius.circular(60),
-                            //   child: image == null
-                            //       ? Image.asset("assets/avatar.png")
-                            //       : Image.file(File(image!.path)),
-                            // )
-
-                            // child: image == null
-                            //     ? Image.file(File("assets/avatar.png"))
-                            //     : Image.file(File(image!.path)),
-
-                            //backgroundImage: image == null
-                            //    ? AssetImage("assets/avatar.png")
-                            //    :
-                            // child: Column(
-                            //   children: [
-                            //     image == null
-                            //         ? Text("Imagem não encontrada")
-                            //         : Image.file(File(image!.path)),
-
-                            //   ],
-                            // ),
-                            //),
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 4,
-                              color: Colors.green,
-                            ),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     spreadRadius: 2,
-                            //     blurRadius: 10,
-                            //     color: Colors.black.withOpacity(0.1),
-                            //     offset: Offset(0, 10),
-                            //   ),
-                            // ],
-                            shape: BoxShape.circle,
-                            // image: DecorationImage(
-                            //   fit: BoxFit.cover,
-                            //   image: NetworkImage(
-                            //       "https://www.freecodecamp.org/news/content/images/2021/03/Quincy-Larson-photo.jpg"),
-                            // )
-                          ),
+                          child: FutureBuilder<User?>(
+                              future: getImage(),
+                              builder: (context, snapshot) {
+                                _photoview.userImage = snapshot.data?.imagem;
+                                return Container(
+                                  child: CircleAvatar(
+                                      radius: 71,
+                                      backgroundColor: Colors.lightGreen,
+                                      backgroundImage: _photoview.userImage ==
+                                              null
+                                          ? AssetImage("assets/avatar.png")
+                                          : MemoryImage(_photoview.userImage!)
+                                              as ImageProvider
+                                      //FileImage(File(image!.path)) as ImageProvider,
+                                      ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 4,
+                                      color: Colors.green,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                );
+                              }),
                         ),
                         Positioned(
                           bottom: 0,
@@ -128,8 +121,8 @@ class EditProfileState extends State<EditProfile> {
                                 shape: BoxShape.circle, color: Colors.green),
                           ),
                         ),
-                      ],
-                    ),
+                      ]);
+                    }),
                   ),
                   SizedBox(
                     height: 35,
@@ -153,6 +146,8 @@ class EditProfileState extends State<EditProfile> {
   }
 
   Widget bottomSheet() {
+    //final _photoview = Photoview();
+
     return Container(
         height: 100,
         width: MediaQuery.of(context).size.width,
@@ -174,7 +169,7 @@ class EditProfileState extends State<EditProfile> {
               TextButton.icon(
                 icon: Icon(Icons.camera),
                 onPressed: () {
-                  filePicker(ImageSource.camera);
+                  _photoview.filePicker(ImageSource.camera);
                 },
                 label: Text("Câmera"),
                 //child:
@@ -182,7 +177,7 @@ class EditProfileState extends State<EditProfile> {
               TextButton.icon(
                 icon: Icon(Icons.camera),
                 onPressed: () {
-                  filePicker(ImageSource.gallery);
+                  _photoview.filePicker(ImageSource.gallery);
                 },
                 label: Text("Galeria"),
                 //child:
@@ -219,12 +214,37 @@ class EditProfileState extends State<EditProfile> {
   //   }
   // }
 
-  void filePicker(ImageSource source) async {
-    final XFile? selectImage = await _picker.pickImage(source: source);
-    print(selectImage!.path);
+  // void filePicker(ImageSource source) async {
+  //   // TODO: Envolver em um try
+  //   final ImagePicker _picker = ImagePicker();
+  //   final XFile? selectImage = await _picker.pickImage(source: source);
+  //   print(selectImage!.path);
 
-    setState(() {
-      image = selectImage;
-    });
-  }
+  //   // Armazena foto no banco
+  //   File imageFile = File(selectImage.path);
+  //   Uint8List imageRaw = await imageFile.readAsBytes();
+  //   updateImage(imageRaw);
+  //   print("Update da imagem realizado");
+  // }
 }
+
+// class PhotoviewStore = _PhotoviewStore with _$PhotoviewStore;
+
+// abstract class __PhotoviewStore with Store {
+//   @observable
+//   Uint8List? userImage;
+
+//   @action
+//   Future filePicker(ImageSource source) async {
+//     final ImagePicker _picker = ImagePicker();
+//     final XFile? selectImage = await _picker.pickImage(source: source);
+//     print(selectImage!.path);
+
+//     // Armazena foto no banco
+//     File imageFile = File(selectImage.path);
+//     userImage = await imageFile.readAsBytes();
+//     updateImage(userImage!);
+
+//     print("Update da imagem realizado");
+//   }
+// }

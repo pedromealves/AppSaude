@@ -34,11 +34,44 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  
+  # Image picker
   image_picker: ^0.8.5
+
+  # Firebae Database
+  cloud_firestore: 3.0.0
+
+  # Database storage
+  sqflite: ^2.0.0+3
+
+  # Format DateTime
+  intl: ^0.17.0
+
+  # Display 
+  flutter_staggered_grid_view: ^0.4.0-nullsafety.3
+
+  #MobX
+  mobx: ^2.0.0
+  flutter_mobx: ^2.0.0
+
+  # display PDF
+  flutter_pdfview: ^1.2.1
+
+  # http
+  http: ^0.13.4
+
+  # path
+  file_picker: ^3.0.0
+  path: ^1.7.0
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  #MobX
+  build_runner: ^2.0.0
+  mobx_codegen: ^2.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
