@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto/home_page.dart';
 import 'edit_profile.dart';
 import 'exames.dart';
+import 'medicamentos.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,13 +14,16 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(builder: (_) => HomePage());
       case '/editprofile':
-        // if(args is String){
-
-        // }
         return MaterialPageRoute(builder: (_) => EditProfile());
 
       case '/exames':
         return MaterialPageRoute(builder: (_) => Exames());
+
+      case '/medicamentos':
+        return MaterialPageRoute(builder: (_) => Home());
+
+      case '/novo_medicamento':
+      //return MaterialPageRoute(builder: (_) => novoMedicamento());
 
       default:
         return _errorRoute();

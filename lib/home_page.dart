@@ -135,14 +135,19 @@ class HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    Card(
-                      elevation: 10,
-                      //color: Colors.green[200],
-                      child: Padding(
-                        padding: const EdgeInsets.all(50),
-                        child: Text(
-                          'Medicamentos',
-                          style: TextStyle(color: Colors.green),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/medicamentos');
+                      },
+                      child: Card(
+                        elevation: 10,
+                        //color: Colors.green[200],
+                        child: Padding(
+                          padding: const EdgeInsets.all(50),
+                          child: Text(
+                            'Medicamentos',
+                            style: TextStyle(color: Colors.green),
+                          ),
                         ),
                       ),
                     ),

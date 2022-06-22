@@ -44,16 +44,25 @@ class ListItemWidget extends StatelessWidget {
             // final file = await PDFApi.loadNetwork(url);
             // openPDF(context, file);
 
-            final file = await PDFApi.pickFile();
+            if (item.file == null) {
+              final file = await PDFApi.pickFile();
 
-            final fileName = await PDFApi.pickFileName();
+              final fileName = await PDFApi.pickFileName();
 
-            item.title = fileName;
-            print(item.title);
-            print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+              item.title = fileName;
+              item.file = file;
 
-            if (file == null) return;
-            openPDF(context, file);
+              print(item.title);
+              print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+              PDFApi.uploadFile(file);
+
+              if (file == null) return;
+              openPDF(context, file);
+            } else {
+              if (item.file == null) return;
+              openPDF(context, item.file!);
+            }
 
             // Se não existe, faz o attach e coloca na firebase
           },
