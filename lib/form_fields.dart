@@ -5,7 +5,7 @@ import 'package:projeto/slider.dart';
 class FormFields extends StatelessWidget {
   final List<String> weightValues = ["pills", "ml", "mg"];
   final int howManyWeeks;
-  final String selectWeight;
+  String selectWeight;
   final Function onPopUpMenuChanged, onSliderChanged;
   final TextEditingController nameController;
   final TextEditingController amountController;
@@ -32,7 +32,7 @@ class FormFields extends StatelessWidget {
               decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-                  labelText: "Pills Name",
+                  labelText: "Nome do Comprimido",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(width: 0.5, color: Colors.grey))),
@@ -45,7 +45,7 @@ class FormFields extends StatelessWidget {
           Row(
             children: [
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(
                   height: constrains.maxHeight * 0.22,
                   child: TextField(
@@ -58,7 +58,7 @@ class FormFields extends StatelessWidget {
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 20.0),
-                        labelText: "Pills Amount",
+                        labelText: "Quantidade",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide:
@@ -79,14 +79,16 @@ class FormFields extends StatelessWidget {
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 20.0),
-                        labelText: "Type",
+                        labelText: "Tipo",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide:
                                 BorderSide(width: 0.5, color: Colors.grey))),
                     items: weightValues
                         .map((weight) => DropdownMenuItem(
-                              child: Text(weight),
+                              child: Text(
+                                weight == "pills" ? "comprimidos" : weight,
+                              ),
                               value: weight,
                             ))
                         .toList(),
@@ -106,7 +108,7 @@ class FormFields extends StatelessWidget {
               padding: const EdgeInsets.only(left: 12.0),
               child: FittedBox(
                 child: Text(
-                  "How long?",
+                  "Por quanto tempo?",
                   style: TextStyle(
                       color: Colors.grey[800],
                       fontSize: 18.0,
@@ -120,7 +122,7 @@ class FormFields extends StatelessWidget {
               child: UserSlider(this.onSliderChanged, this.howManyWeeks)),
           Align(
             alignment: Alignment.bottomRight,
-            child: FittedBox(child: Text('$howManyWeeks weeks')),
+            child: FittedBox(child: Text('$howManyWeeks semana(s)')),
           )
         ],
       ),

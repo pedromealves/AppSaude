@@ -82,15 +82,15 @@ class MedicineCard extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text("Delete ?"),
-              content: Text("Are you sure to delete $medicineName medicine?"),
+              title: Text("Deletar ?"),
+              content: Text("Tem certeza de que quer deletar $medicineName?"),
               contentTextStyle:
                   TextStyle(fontSize: 17.0, color: Colors.grey[800]),
               actions: [
                 FlatButton(
                   splashColor: Theme.of(context).primaryColor.withOpacity(0.3),
                   child: Text(
-                    "Cancel",
+                    "Cancelar",
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   onPressed: () {
@@ -99,7 +99,7 @@ class MedicineCard extends StatelessWidget {
                 ),
                 FlatButton(
                   splashColor: Theme.of(context).primaryColor.withOpacity(0.3),
-                  child: Text("Delete",
+                  child: Text("Deletar",
                       style: TextStyle(color: Theme.of(context).primaryColor)),
                   onPressed: () async {
                     await Repository().deleteData('Pills', medicineId);

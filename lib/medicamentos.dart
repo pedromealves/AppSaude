@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
       elevation: 2.0,
       onPressed: () async {
         //refresh the pills from database
-        await Navigator.pushNamed(context, "/add_new_medicine")
+        await Navigator.pushNamed(context, "/novo_medicamento")
             .then((_) => setData());
       },
       child: Icon(

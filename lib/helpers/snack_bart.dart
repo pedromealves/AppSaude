@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Snackbar {
   void showSnack(String message, GlobalKey<ScaffoldState> _scaffoldKey,
-          Function undo) =>
+          Function? undo) =>
       _scaffoldKey.currentState!.showSnackBar(
         SnackBar(
           content: Text(message),
