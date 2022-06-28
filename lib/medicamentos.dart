@@ -77,6 +77,12 @@ class _HomeState extends State<Home> {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Veja seus medicamentos",
+          style: TextStyle(color: Colors.black, fontSize: 16),
+        ),
+      ),
       floatingActionButton: addButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Color.fromRGBO(248, 248, 248, 1),
@@ -93,28 +99,19 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
-                    alignment: Alignment.topCenter,
+                    //alignment: Alignment.topCenter,
                     height: deviceHeight * 0.1,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Medicamentos",
+                          "Adicione seus Medicamentos",
                           style: Theme.of(context)
                               .textTheme
-                              .headline4!
+                              .headline5!
                               .copyWith(color: Colors.black),
+                          textAlign: TextAlign.center,
                         ),
-                        // ShakeAnimatedWidget(
-                        //   enabled: true,
-                        //   duration: Duration(milliseconds: 2000),
-                        //   curve: Curves.linear,
-                        //   shakeAngle: Rotation.deg(z: 30),
-                        //   child: Icon(
-                        //     Icons.notifications_none,
-                        //     size: 42.0,
-                        //   ),
-                        // )
                       ],
                     ),
                   ),

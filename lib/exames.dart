@@ -36,16 +36,9 @@ class ExamesState extends State<Exames> {
     getFilesFromFB();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.green,
-          ),
-          onPressed: () {
-            Navigator.of(context).pushNamed('/');
-          },
+        title: const Text(
+          "Confira seus exames",
+          style: TextStyle(color: Colors.black, fontSize: 16),
         ),
       ),
       body: AnimatedList(
@@ -69,8 +62,7 @@ class ExamesState extends State<Exames> {
 
     final newItem = ListItem(
       title: 'PDF',
-      urlImage:
-          'https://i.pinimg.com/736x/28/d1/61/28d1616c72589f9b4a633bb7dccfcfc3.jpg',
+      image: '/assets/pdf.jpg',
       file: null,
     );
 
@@ -85,9 +77,8 @@ class ExamesState extends State<Exames> {
     final newIndex = 1;
 
     final newItem = ListItem(
-      title: '',
-      urlImage:
-          'https://i.pinimg.com/736x/28/d1/61/28d1616c72589f9b4a633bb7dccfcfc3.jpg',
+      title: file.path.split('/').last,
+      image: '/assets/pdf.jpg',
       file: file,
     );
 

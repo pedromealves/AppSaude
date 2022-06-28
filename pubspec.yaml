@@ -50,6 +50,12 @@ dependencies:
   # Image picker
   image_picker: ^0.8.5
 
+  #maps
+  google_maps_flutter: ^2.1.8
+  geolocator: ^9.0.0
+  flutter_polyline_points: ^1.0.0
+  dio: ^4.0.6
+
   # Firebase Database
   cloud_firestore: ^3.1.18
   firebase_core: ^1.18.0

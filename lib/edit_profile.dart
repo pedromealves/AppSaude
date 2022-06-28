@@ -1,19 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto/model/model.dart';
 import '/db/interface_database.dart';
-
-import 'package:mobx/mobx.dart';
 import '/stores/photoview_store.dart';
-// part 'photoview_store.g.dart.old';
-
-//Uint8List? userImage;
 
 final _photoview = Photoview();
 
@@ -24,27 +15,23 @@ class EditProfile extends StatefulWidget {
 }
 
 class EditProfileState extends State<EditProfile> {
-  //final ImagePicker _picker = ImagePicker();
-  //XFile? image;
-  //XFile? imageBeweenScreens;
-
-  //final _photoView = PhotoviewStore();
+  TextEditingController nomeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    //final ImagePicker _picker = ImagePicker();
-
-    //final _photoview = Photoview();
-
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          title: const Text(
+            "Edite seu perfil",
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+          backgroundColor: Colors.lightGreen,
           elevation: 0,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.green,
+              color: Colors.black,
             ),
             onPressed: () {
               Navigator.of(context).pushNamed('/');
@@ -80,15 +67,14 @@ class EditProfileState extends State<EditProfile> {
                                 _photoview.userImage = snapshot.data?.imagem;
                                 return Container(
                                   child: CircleAvatar(
-                                      radius: 71,
-                                      backgroundColor: Colors.lightGreen,
-                                      backgroundImage: _photoview.userImage ==
-                                              null
-                                          ? AssetImage("assets/avatar.png")
-                                          : MemoryImage(_photoview.userImage!)
-                                              as ImageProvider
-                                      //FileImage(File(image!.path)) as ImageProvider,
-                                      ),
+                                    radius: 71,
+                                    backgroundColor: Colors.lightGreen,
+                                    backgroundImage:
+                                        _photoview.userImage == null
+                                            ? AssetImage("assets/avatar.png")
+                                            : MemoryImage(_photoview.userImage!)
+                                                as ImageProvider,
+                                  ),
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                       width: 4,
@@ -128,17 +114,16 @@ class EditProfileState extends State<EditProfile> {
                     height: 35,
                   ),
                   TextField(
+                    controller: nomeController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(bottom: 3),
                       labelText: "Nome Completo",
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       hintText: "",
-                      // hintStyle: TextStyle(
-                      //   fontSize: 16,
-                      //   fontWeight: FontWeight.bold,
-                      //   color: Colors.black,
-                      // ),
                     ),
+                    onSubmitted: (value) {
+                      updateName(nomeController.text);
+                    },
                   ),
                 ],
               ),
@@ -146,8 +131,6 @@ class EditProfileState extends State<EditProfile> {
   }
 
   Widget bottomSheet() {
-    //final _photoview = Photoview();
-
     return Container(
         height: 100,
         width: MediaQuery.of(context).size.width,
@@ -186,65 +169,4 @@ class EditProfileState extends State<EditProfile> {
           ),
         ]));
   }
-
-  // Future photoPicker(ImageSource source) async {
-  //   PickedFile? pickedFile = await _picker.pickImage(
-  //     source: source,
-  //   );
-
-  //   if (pickedFile == null) {
-  //     return null;
-
-  //   setState(() {
-  //     _imageFile = pickedFile as PickedFile;
-  //   });
-  // }
-
-  // Future pickImage(ImageSource source) async {
-  //   try {
-  //     final image = await ImagePicker().pickImage(source: source);
-  //     if (image == null) return;
-
-  //     final imageTemporary = File(image.path);
-  //     setState(() {
-  //       this.image = imageTemporary;
-  //     });
-  //   } on PlatformException catch (e) {
-  //     //print('Failed to pick image: $e');
-  //   }
-  // }
-
-  // void filePicker(ImageSource source) async {
-  //   // TODO: Envolver em um try
-  //   final ImagePicker _picker = ImagePicker();
-  //   final XFile? selectImage = await _picker.pickImage(source: source);
-  //   print(selectImage!.path);
-
-  //   // Armazena foto no banco
-  //   File imageFile = File(selectImage.path);
-  //   Uint8List imageRaw = await imageFile.readAsBytes();
-  //   updateImage(imageRaw);
-  //   print("Update da imagem realizado");
-  // }
 }
-
-// class PhotoviewStore = _PhotoviewStore with _$PhotoviewStore;
-
-// abstract class __PhotoviewStore with Store {
-//   @observable
-//   Uint8List? userImage;
-
-//   @action
-//   Future filePicker(ImageSource source) async {
-//     final ImagePicker _picker = ImagePicker();
-//     final XFile? selectImage = await _picker.pickImage(source: source);
-//     print(selectImage!.path);
-
-//     // Armazena foto no banco
-//     File imageFile = File(selectImage.path);
-//     userImage = await imageFile.readAsBytes();
-//     updateImage(userImage!);
-
-//     print("Update da imagem realizado");
-//   }
-// }

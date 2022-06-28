@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:projeto/model/medicamento_model.dart';
-
 import 'db/medicamentos_database.dart';
 import 'notifications/notifications.dart';
 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:projeto/home_page.dart';
+import 'package:projeto/maps.dart';
 import 'package:projeto/novo_medicamento.dart';
 import 'edit_profile.dart';
 import 'exames.dart';
@@ -25,6 +26,9 @@ class RouteGenerator {
 
       case '/novo_medicamento':
         return MaterialPageRoute(builder: (_) => AddNewMedicine());
+
+      case '/maps':
+        return MaterialPageRoute(builder: (_) => Maps());
 
       default:
         return _errorRoute();

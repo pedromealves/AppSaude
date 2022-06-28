@@ -70,6 +70,12 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
     final deviceHeight = MediaQuery.of(context).size.height - 60.0;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Agende medicamentos",
+          style: TextStyle(color: Colors.black, fontSize: 16),
+        ),
+      ),
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(248, 248, 248, 1),
@@ -80,17 +86,6 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: deviceHeight * 0.05,
-                child: FittedBox(
-                  child: InkWell(
-                    child: Icon(Icons.arrow_back),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
               SizedBox(
                 height: deviceHeight * 0.01,
               ),
@@ -99,7 +94,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                 height: deviceHeight * 0.05,
                 child: FittedBox(
                     child: Text(
-                  "Adicionar Comprimidos",
+                  "Adicionar Medicamento",
                   style: Theme.of(context)
                       .textTheme
                       .headline3!

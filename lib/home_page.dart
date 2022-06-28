@@ -12,24 +12,23 @@ import '/model/model.dart';
 import '/db/saude_database.dart';
 import '/db/interface_database.dart';
 
+import '/stores/photoview_store.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
-        primaryColor: Colors.green[100],
+        primaryColor: Color.fromARGB(255, 218, 233, 219),
         textTheme: TextTheme(
           bodyText1: TextStyle(fontSize: 30.0, fontFamily: 'Hind'),
           bodyText2: TextStyle(fontSize: 20.0, fontFamily: 'Hind'),
         ),
       ),
       title: "Saúde",
-      //home: HomePage(),
-      //routes: {'/editprofile': (_) => EditProfile()},
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
@@ -43,16 +42,12 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   Future<User> user = newUser();
-  //final ImagePicker _picker = ImagePicker();
-  //XFile? image;
-  //userImageFuture<Image?> image = getImage();
-
-  //User? userFromDB = await SaudeDatabase.instance.readUser(1);
+  final _photoview = Photoview();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      backgroundColor: Color.fromARGB(255, 218, 233, 219),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(40),
@@ -66,21 +61,22 @@ class HomePageState extends State<HomePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Text("Olá,",
-                        //     style:
-                        //         TextStyle(fontSize: 25, color: Colors.black45)),
-                        Text("Olá,",
-                            style: Theme.of(context).textTheme.bodyText1),
-                        // Text("José",
-                        //     style: TextStyle(
-                        //         fontSize: 25, fontWeight: FontWeight.bold)),
-                        // Text("José",
-                        //     style: Theme.of(context).textTheme.bodyText1)
-                        // FutureBuilder(
-                        //     future: getImage(),
-                        //     builder: (context, snapshot) {
-                        //       Text? userImage = snapshot.data?.imagem;
-                        //     }),
+                        FutureBuilder<User?>(
+                            future: getName(),
+                            builder: (context, snapshot) {
+                              String? userName = snapshot.data?.nome;
+                              return Container(
+                                child: userName == null
+                                    ? Text("Olá",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1)
+                                    : Text("Olá, \n $userName",
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        )),
+                              );
+                            }),
                       ],
                     ),
                     GestureDetector(
@@ -99,9 +95,8 @@ class HomePageState extends State<HomePage> {
                                   backgroundColor: Colors.lightGreen,
                                   backgroundImage: userImage == null
                                       ? AssetImage("assets/avatar.png")
-                                      : MemoryImage(userImage) as ImageProvider
-                                  //FileImage(File(image!.path)) as ImageProvider,
-                                  ),
+                                      : MemoryImage(userImage)
+                                          as ImageProvider),
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 4,
@@ -124,13 +119,16 @@ class HomePageState extends State<HomePage> {
                         Navigator.of(context).pushNamed('/exames');
                       },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                         elevation: 10,
-                        //color: Colors.green[200],
                         child: Padding(
                           padding: const EdgeInsets.all(50),
                           child: Text(
                             'Exames',
-                            style: TextStyle(color: Colors.green),
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
@@ -140,13 +138,35 @@ class HomePageState extends State<HomePage> {
                         Navigator.of(context).pushNamed('/medicamentos');
                       },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                         elevation: 10,
-                        //color: Colors.green[200],
                         child: Padding(
                           padding: const EdgeInsets.all(50),
                           child: Text(
                             'Medicamentos',
-                            style: TextStyle(color: Colors.green),
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/maps');
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        elevation: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(50),
+                          child: Text(
+                            'Hospitais Próximos',
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),

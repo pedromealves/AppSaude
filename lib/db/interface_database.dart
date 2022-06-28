@@ -41,3 +41,16 @@ Future<User?> getImage() async {
 Future delUser() async {
   await SaudeDatabase.instance.deleteUser(1);
 }
+
+Future updateName(String nome) async {
+  User? userFromDB = await SaudeDatabase.instance.readUser(1);
+
+  userFromDB?.nome = nome.toString();
+  await SaudeDatabase.instance.updateUser(userFromDB!);
+}
+
+Future<User?> getName() async {
+  User? userFromDB = await SaudeDatabase.instance.readUser(1);
+
+  return userFromDB?.nome == null ? null : userFromDB;
+}

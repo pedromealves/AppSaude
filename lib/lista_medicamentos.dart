@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:projeto/model/medicamento_model.dart';
-
 import 'card_medicamentos.dart';
 
 class MedicinesList extends StatelessWidget {

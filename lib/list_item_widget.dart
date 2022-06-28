@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_declarations
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:projeto/list_item.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'api/pdf_api.dart';
 import 'api/pdf_viewer_page.dart';
 
@@ -22,7 +20,7 @@ class ListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizeTransition(
-        key: ValueKey(item.urlImage),
+        key: ValueKey(item.image),
         sizeFactor: animation,
         child: buildItem(context),
       );
@@ -35,16 +33,11 @@ class ListItemWidget extends StatelessWidget {
         ),
         child: ListTile(
           onTap: () async {
-            //Navigator.of(context).pushNamed('/');
-
-            // Se existe PDF, exibe o PDF da firebase
-
-            // final url =
-            //     'https://www.sef.sc.gov.br/arquivos_portal/servicos/42/Roteiro_para_criacao_de_assinatura_digital_em_PDF___1.1.pdf';
-            // final file = await PDFApi.loadNetwork(url);
-            // openPDF(context, file);
-
             if (item.file == null) {
+              if (item.image == "ignore") {
+                return;
+              }
+
               final file = await PDFApi.pickFile();
 
               final fileName = await PDFApi.pickFileName();
@@ -52,24 +45,21 @@ class ListItemWidget extends StatelessWidget {
               item.title = fileName;
               item.file = file;
 
-              print(item.title);
-              print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
               PDFApi.uploadFile(file);
 
-              if (file == null) return;
-              openPDF(context, file);
+              if (file != null) {
+                openPDF(context, file);
+              } else {
+                return;
+              }
             } else {
-              if (item.file == null) return;
               openPDF(context, item.file!);
             }
-
-            // Se não existe, faz o attach e coloca na firebase
           },
           contentPadding: EdgeInsets.all(16),
           leading: CircleAvatar(
             radius: 32,
-            backgroundImage: NetworkImage(item.urlImage!),
+            backgroundImage: AssetImage("assets/pdf.jpg"),
           ),
           title: Text(
             item.title!,
